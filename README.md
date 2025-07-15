@@ -59,7 +59,7 @@ First, compile and run the C program (e.g., `spring_rk4.c`) to generate the coor
 
 ```sh
 # Compile
-gcc spring_rk4.c -o spring_sim -lm
+gcc spring_program.c -o spring_sim -lm
 
 # Run
 ./spring_sim
