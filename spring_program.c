@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <complex.h>
-
+#include <unistd.h>
 // Hを計算する関数（変更なし）
 double complex calculate_H(double dy, double d2y, double d3y, int n)
 {
@@ -26,12 +26,12 @@ int main(void)
     const double dt = 0.01; // 時間の刻み幅
     const double total_time = 100.0;
 
-    FILE *fp = fopen("spring_rk4.dat", "w");
+    /*FILE *fp = fopen("spring_rk4.dat", "w");
     if (fp == NULL)
     {
         printf("ファイルを開けません。\n");
         return 1;
-    }
+    }*/
 
     // --- シミュレーションループ ---
     for (double t = 0; t < total_time; t += dt)
@@ -43,10 +43,13 @@ int main(void)
         double complex H = calculate_H(dy, d2y, d3y, n);
 
         // 指紋Hの座標をファイルに書き出す
-        if (isfinite(creal(H)) && isfinite(cimag(H)))
-        {
-            fprintf(fp, "%f,%f\n", creal(H), cimag(H));
-        }
+        //if (isfinite(creal(H)) && isfinite(cimag(H)))
+        //{
+            //fprintf(fp, "%f,%f\n", creal(H), cimag(H));
+            printf("%.15f,%.15f,%.15f\n",t, creal(H), cimag(H));
+            fflush(stdout);
+            usleep(10000); // 10ミリ秒の遅延（オプション）
+        //}
 
         // --- ★★★ ここが変更点（4次のルンゲ＝クッタ法） ★★★ ---
         // 中間的な傾き（k）を4つ計算する
@@ -67,7 +70,7 @@ int main(void)
         y_prime = y_prime + (dt / 6.0) * (k1_yp + 2.0 * k2_yp + 2.0 * k3_yp + k4_yp);
     }
 
-    fclose(fp);
-    printf("RK4によるバネの指紋データ 'spring_rk4.dat' が生成されました。\n");
+    //fclose(fp);
+    printf("RK4によるバネの指紋データ 'spring_program.dat' が生成されました。\n");
     return 0;
 }
