@@ -1,32 +1,34 @@
-# function_fingerprint
-
-# Geometric Fingerprint Framework
+# Physics-Informed Geometric Fingerprints
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-An original conceptual framework for visualizing the local properties (derivatives) of a function as a unique "geometric fingerprint" on the complex plane.
+This project uses a novel conceptual framework to analyze and visualize the behavior of dynamical systems. It applies the "Geometric Fingerprint" method to a simple harmonic oscillator, demonstrating how the underlying physics can be translated into a unique trajectory on the complex plane.
 
-![Example Trajectory](spring_rk4_trajectory.png)
-*(Upload and display an image of a generated trajectory, e.g., for the spring simulation, here)*
+![Spring Oscillator Trajectory](https'://i.imgur.com/G4gA3rJ.png)
+*(The trajectory of the fingerprint vector H for a simple harmonic oscillator, `y'' = -y`)*
 
 ---
 
 ## 📖 Overview
 
-This project integrates information from the first, second, and third derivatives of a function `f(x)` or a system described by a differential equation at a given point, calculating a characteristic "step vector `H`" onto the complex plane.
+The core of this project is a C program that performs two key tasks simultaneously:
 
-By plotting the trajectory of `H` as `x` or time `t` varies, it becomes possible to capture the intrinsic mathematical characteristics of each function or system (such as periodicity, stability, singularities, chaos, etc.) as a visual pattern.
+1.  **High-Fidelity Simulation**: It simulates a simple harmonic oscillator (a frictionless spring) using the highly accurate **4th-order Runge-Kutta (RK4)** method for numerical integration. This ensures a stable, non-decaying oscillation that closely models the ideal physical system.
 
-### The Concept: Integration via Geometric Mean
+2.  **Geometric Fingerprinting**: At each time step of the simulation, it calculates a "geometric fingerprint" (`H`). This unique complex vector is derived from the system's state variables (position, velocity, acceleration) using a custom mathematical framework.
 
-The core of this framework lies in its elegant method of integrating the **additive interaction (`H₁`)** and the **multiplicative interaction (`H₂`)** of direction vectors—generated from the derivatives—via a **geometric mean**.
+The result is a time-series of complex numbers that represents the "fingerprint" of the oscillator's state as it evolves through time.
+
+### The Fingerprint Calculation
+
+The fingerprint vector `H` is calculated from the system's derivatives (`y'`, `y''`, `y'''`) by translating them into unit vectors on the complex plane. Their additive (`H₁`) and multiplicative (`H₂`) interactions are then unified via a **geometric mean**.
 
 $$
-H_1 = \frac{h_2 + h_3 + h_4}{3}
+H_1 = \frac{h_1 + h_2 + h_3}{3}
 $$
 
 $$
-H_2 = h_2 \cdot h_3 \cdot h_4
+H_2 = h_1 \cdot h_2 \cdot h_3
 $$
 
 $$
@@ -35,29 +37,15 @@ $$
 
 ---
 
-## ✨ Examples of Discovered "Fingerprints"
+## 🚀 How to Use
 
-Using this framework, unique "fingerprints" have been discovered for various functions and systems.
+The program is designed to be run from the command line, piping its output directly into a plotting tool like Gnuplot for real-time visualization.
 
-| Function/System | Magnitude of H vs. Time | Trajectory of H on the Complex Plane |
-| :--- | :---: | :---: |
-| **`f(x) = sin(x)`** | ![sin(x) magnitude](sin_magnitude.png) | ![sin(x) trajectory](sin_trajectory.png) |
-| **`f(x) = x^4`** | ![x^4 magnitude](x4_magnitude.png) | ![x^4 trajectory](x4_trajectory.png) |
-| **Spring Oscillation (RK4)** | ![Spring magnitude](spring_rk4_magnitude.png) | ![Spring trajectory](spring_rk4_trajectory.png) |
+### 1. Compile
 
-*(Upload and display your generated graph images here)*
-
----
-
-## 🚀 Usage
-
-There are two main steps to run this framework.
-
-### 1. Generate Trajectory Data
-
-First, compile and run the C program (e.g., `spring_rk4.c`) to generate the coordinate data for the trajectory.
+First, compile the C program. You will need a standard C compiler (like GCC) and the math library.
 
 ```sh
-chmod +x spring_data.sh
-./spring_data.sh
+chmod +x spring_program.sh
+./spring_program.sh
 command+Q
