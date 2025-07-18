@@ -60,3 +60,4 @@ First, compile and run the C program (e.g., `spring_rk4.c`) to generate the coor
 ```sh
 chmod +x spring_data.sh
 ./spring_data.sh
+command q
