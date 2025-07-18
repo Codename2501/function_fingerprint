@@ -58,8 +58,5 @@ There are two main steps to run this framework.
 First, compile and run the C program (e.g., `spring_rk4.c`) to generate the coordinate data for the trajectory.
 
 ```sh
-# Compile
-gcc spring_program.c -o spring_sim -lm
-
-# Run
-./spring_sim
+chmod +x spring_data.sh
+./spring_data.sh
